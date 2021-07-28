@@ -70,9 +70,9 @@ class UserService {
       throw ApiError.UnauthorizedError()
     }
     
-    const tokenData = tokenService.validateRefreshToken(refreshToken)
+    const userData = tokenService.validateRefreshToken(refreshToken)
     const tokenFromDb = tokenService.findToken(refreshToken)
-    if (!tokenData || tokenFromDb) {
+    if (!userData || !tokenFromDb) {
       throw ApiError.UnauthorizedError();
     }
     
