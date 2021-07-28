@@ -13,6 +13,7 @@ router.post(
 );
 router.get("/activate/:link", userController.activate);
 router.post("/login", userController.checkUser);
+router.post("/logout", userController.logout);
 
 // const {
 //   getAllCoordinates,
