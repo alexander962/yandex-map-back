@@ -37,3 +37,17 @@ module.exports.checkUser = async (req, res, next) => {
     next(e)
   }
 }
+
+module.exports.logout = async (req, res, next) => {
+  try {
+    // достаём refreshToken
+    const {refreshToken} = req.cookies;
+    const token = await userService.logout(refreshToken)
+    // удаляем куку с refreshToken
+    res.clearCookie('refreshToken')
+    // возвращаем ответ на клиент
+    return res.json(token)
+  } catch (e) {
+    next(e)
+  }
+}
