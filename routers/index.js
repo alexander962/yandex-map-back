@@ -12,7 +12,7 @@ router.post(
   userController.createNewUser,
 );
 router.get("/activate/:link", userController.activate);
-// router.post("/checkUser", checkUser);
+router.post("/login", userController.checkUser);
 
 // const {
 //   getAllCoordinates,

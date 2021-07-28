@@ -27,17 +27,13 @@ module.exports.activate = async (req, res, next) => {
   }
 }
 
-module.exports.checkUser = (req, res, next) => {
-  User.findOne({ login: req.body.login }).then((result) => {
-    if (result) {
-      const userPasswordHash = sha1(req.body.password);
-      if (userPasswordHash === result.password) {
-        return res.status(200).send({ data: result });
-      } else {
-        return res.status(404).send({ error: "Пароль не верный" });
-      }
-    } else {
-      return res.status(404).send({ error: "Пользователь не найден" });
-    }
-  })
+module.exports.checkUser = async (req, res, next) => {
+  try {
+    const {email, password} = req.body
+    const userData = await userService.login(email, password)
+    res.cookie('refreshToken', userData.refreshToken, {maxAxge: 30 * 24 * 60 * 60 * 1000, httpOnly: true})
+    return res.json(userData)
+  } catch (e) {
+    next(e)
+  }
 }
