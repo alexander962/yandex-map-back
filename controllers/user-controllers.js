@@ -46,12 +46,9 @@ module.exports.checkUser = async (req, res, next) => {
 
 module.exports.logout = async (req, res, next) => {
   try {
-    // достаём refreshToken
     const { refreshToken } = req.cookies;
     const token = await userService.logout(refreshToken);
-    // удаляем куку с refreshToken
     res.clearCookie("refreshToken");
-    // возвращаем ответ на клиент
     return res.json(token);
   } catch (e) {
     next(e);
@@ -60,16 +57,12 @@ module.exports.logout = async (req, res, next) => {
 
 module.exports.refresh = async (req, res, next) => {
   try {
-    // достаём refreshToken
     const { refreshToken } = req.cookies;
     const userData = await userService.refresh(refreshToken);
-    // refresh токен будем хранить в cookie, указываем ключ, сам токен и параметры время жизни и
-    // httpOnly = true(чтобы эту cookie нельзя было изменять и получать внутри браузера из js)
     res.cookie("refreshToken", userData.refreshToken, {
       maxAxge: 30 * 24 * 60 * 60 * 1000,
       httpOnly: true,
     });
-    // возвращаем её на клиент, т.е. отправляем в браузер
     return res.json(userData);
   } catch (e) {
     next(e);
