@@ -6,7 +6,8 @@ const coordinatesSchema = new Schema({
   name: String,
   longitude: Number,
   latitude: Number,
-  userId: String
+  userId: String,
+  metka: String
 });
 
 module.exports = Coordinates = mongoose.model("coordinates", coordinatesSchema)
