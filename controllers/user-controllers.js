@@ -30,6 +30,17 @@ module.exports.activate = async (req, res, next) => {
   }
 };
 
+module.exports.getActivated = async (req, res, next) => {
+  try {
+    const { id } = req.query;
+    const userActivated = await userService.getActivated(id);
+    console.log(res.json(userActivated))
+    return res.json(userActivated)
+  } catch (e) {
+    next(e)
+  }
+}
+
 module.exports.checkUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;

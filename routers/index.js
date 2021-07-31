@@ -15,6 +15,7 @@ router.get("/activate/:link", userController.activate);
 router.post("/login", userController.checkUser);
 router.post("/logout", userController.logout);
 router.get("/refresh", userController.refresh);
+router.get("/getActivated", userController.getActivated);
 
 const {
   getAllCoordinates,
