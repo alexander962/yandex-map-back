@@ -39,6 +39,11 @@ class UserService {
     await user.save()
   }
 
+  async getActivated(id) {
+    const user = await UserModel.findOne({_id: id});
+    return user.isActivated
+  }
+
   async login(email, password) {
     const user = await UserModel.findOne({email})
     if (!user) {
