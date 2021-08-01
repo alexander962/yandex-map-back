@@ -41,7 +41,10 @@ class UserService {
 
   async getActivated(id) {
     const user = await UserModel.findOne({_id: id});
-    return user.isActivated
+    const isActivated = user.isActivated
+    return {
+      isActivated: isActivated
+    } 
   }
 
   async login(email, password) {
